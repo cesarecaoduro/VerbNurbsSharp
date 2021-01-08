@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using VerbNurbsSharp.Blazor.Babylon;
 
 namespace VerbNurbsSharp.BlazorWASM
 {
@@ -15,6 +16,7 @@ namespace VerbNurbsSharp.BlazorWASM
         {
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
 
+            builder.Services.AddScoped<IBabylonFactory, BabylonFactory>();
             builder.Services
               .AddBlazorise(options =>
               {
