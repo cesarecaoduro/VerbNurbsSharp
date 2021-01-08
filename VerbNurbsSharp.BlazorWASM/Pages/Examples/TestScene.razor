@@ -1,0 +1,53 @@
+﻿@page "/testscene"
+@inject IBabylonFactory babylonFactory
+@using System.Dynamic
+@using VerbNurbsSharp.Blazor.Babylon.Core
+
+<h3>Test Scene</h3>
+
+<Row>
+    <Column ColumnSize="ColumnSize.IsHalf">
+        This example uses the <code>IBabylonFactory</code>
+        <canvas id="babylonRender" touch-action="none" style="width:100%; height:100%"></canvas>
+    </Column>
+    <Column ColumnSize="ColumnSize.IsHalf">
+        <Slider TValue="double" @bind-Value="sliderValue" Min="0.1" Max="5.0" @onchange="ValueChanged">Diameter</Slider>
+    </Column>
+</Row>
+
+@code {
+
+    public double sliderValue { get; set; } = 2.0;
+    public Scene scene { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+
+            var canvasId = "babylonRender";
+            var engine = await babylonFactory.CreateEngine(canvasId, true);
+            scene = await babylonFactory.CreateScene(engine);
+            var cameraTarget = await babylonFactory.CreateVector3(0, 0, 5);
+            var camera = await babylonFactory.CreateArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 2, cameraTarget, scene, canvasId);
+            var hemisphericLightDirection = await babylonFactory.CreateVector3(1, 1, 0);
+            var light1 = await babylonFactory.CreateHemispehericLight("light1", hemisphericLightDirection, scene);
+            var pointLightDirection = await babylonFactory.CreateVector3(0, 1, -1);
+            var light2 = await babylonFactory.CreatePointLight("light2", pointLightDirection, scene);
+            var sphereOptions = new ExpandoObject();
+            sphereOptions.TryAdd("diameter", sliderValue);
+            var sphere = await babylonFactory.CreateSphere("sphere", sphereOptions, scene);
+            await engine.RunRenderLoop(scene);
+
+        }
+
+    }
+
+    async Task ValueChanged()
+    {
+        Console.WriteLine(sliderValue);
+        var sphereOptions = new ExpandoObject();
+        sphereOptions.TryAdd("diameter", sliderValue);
+        var sphere = await babylonFactory.CreateSphere("sphere", sphereOptions, scene);
+    }
+}

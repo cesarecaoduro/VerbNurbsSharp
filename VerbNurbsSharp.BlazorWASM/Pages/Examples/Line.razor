@@ -2,6 +2,8 @@
 @inject IJSRuntime JsRuntime
 @inject IBabylonFactory babylonFactory
 
+@using System.Dynamic  
+
 <h3>Line</h3>
 
 <Row>
@@ -14,12 +16,7 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        //await JsRuntime.InvokeVoidAsync("InitializeBabylonScene", "babylonRender");
-        //await JsRuntime.InvokeVoidAsync("Line");
-
-        var canvasId = "babylonRender";
-        var engine = await babylonFactory.CreateEngine(canvasId, true);
-        var scene = await babylonFactory.CreateScene(engine);
-
+        await JsRuntime.InvokeVoidAsync("InitializeBabylonScene", "babylonRender");
+        await JsRuntime.InvokeVoidAsync("Line");
     }
 }

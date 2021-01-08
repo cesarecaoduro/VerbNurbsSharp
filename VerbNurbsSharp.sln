@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VerbNurbsSharp.XUnit", "Ver
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VerbNurbsSharp.BlazorWASM", "VerbNurbsSharp.BlazorWASM\VerbNurbsSharp.BlazorWASM.csproj", "{A0F33781-A655-4F01-A721-B73FE4E14249}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VerbNurbsSharp.Blazor.Babylon", "VerbNurbsSharp.Blazor.Babylon\VerbNurbsSharp.Blazor.Babylon.csproj", "{19BE8DC1-D095-4296-9327-12EACB5CEBA3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VerbNurbsSharp.Blazor.Babylon", "VerbNurbsSharp.Blazor.Babylon\VerbNurbsSharp.Blazor.Babylon.csproj", "{19BE8DC1-D095-4296-9327-12EACB5CEBA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

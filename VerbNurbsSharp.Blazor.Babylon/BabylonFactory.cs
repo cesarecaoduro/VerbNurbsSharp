@@ -1,7 +1,11 @@
 ﻿using Microsoft.JSInterop;
 using System;
+using System.Dynamic;
 using System.Threading.Tasks;
+using VerbNurbsSharp.Blazor.Babylon.Camera;
 using VerbNurbsSharp.Blazor.Babylon.Core;
+using VerbNurbsSharp.Blazor.Babylon.Lights;
+using VerbNurbsSharp.Blazor.Babylon.Meshes;
 
 namespace VerbNurbsSharp.Blazor.Babylon
 {
@@ -13,29 +17,42 @@ namespace VerbNurbsSharp.Blazor.Babylon
         public BabylonFactory(IJSRuntime jsRuntime)
         {
             _jsRuntime = jsRuntime;
-            moduleTask = new(() => jsRuntime.InvokeAsync<IJSObjectReference>(
-               "import", "./_content/VerbNurbsSharp.Blazor.Babylon/babylonInterop.js").AsTask());
         }
 
-        public async Task<Scene> CreateScene(Engine engine)
+        public async Task<ArcRotateCamera> CreateArcRotateCamera(string name, double alpha, double beta, double radius, Vector3 target, Scene scene, string canvasId)
         {
-            var module = await moduleTask.Value;
-            return new Scene(_jsRuntime, await module.InvokeAsync<JsRuntimeObjectRef>("babylonInterop.createScene", engine));
+            return new ArcRotateCamera(_jsRuntime, await _jsRuntime.InvokeAsync<JsRuntimeObjectRef>("babylonInterop.createArcRotateCamera", name, alpha, beta, radius, target, scene, canvasId));
         }
 
         public async Task<Engine> CreateEngine(string canvasId, bool antialias = false)
         {
-            var module = await moduleTask.Value;
-            return new Engine(_jsRuntime, await module.InvokeAsync<JsRuntimeObjectRef>("babylonInterop.createEngine", canvasId, antialias));
+            return new Engine(_jsRuntime, await _jsRuntime.InvokeAsync<JsRuntimeObjectRef>("babylonInterop.createEngine", canvasId, antialias));
         }
 
-        public async ValueTask DisposeAsync()
+        public async Task<HemisphericLight> CreateHemispehericLight(string name, Vector3 direction, Scene scene)
         {
-            if (moduleTask.IsValueCreated)
-            {
-                var module = await moduleTask.Value;
-                await module.DisposeAsync();
-            }
+            return new HemisphericLight(_jsRuntime, await _jsRuntime.InvokeAsync<JsRuntimeObjectRef>("babylonInterop.createHemisphericLight", name, direction, scene));
         }
+
+        public async Task<PointLight> CreatePointLight(string name, Vector3 direction, Scene scene)
+        {
+            return new PointLight(_jsRuntime, await _jsRuntime.InvokeAsync<JsRuntimeObjectRef>("babylonInterop.createPointLight", name, direction, scene));
+        }
+
+        public async Task<Scene> CreateScene(Engine engine)
+        {
+            return new Scene(_jsRuntime, await _jsRuntime.InvokeAsync<JsRuntimeObjectRef>("babylonInterop.createScene", engine));
+        }
+
+        public async Task<Mesh> CreateSphere(string name, ExpandoObject options, Scene scene)
+        {
+            return new Mesh(_jsRuntime, await _jsRuntime.InvokeAsync<JsRuntimeObjectRef>("babylonInterop.createSphere", name, options, scene));
+        }
+
+        public async Task<Vector3> CreateVector3(double x, double y, double z) => new Vector3(
+            _jsRuntime, 
+            await _jsRuntime.InvokeAsync<JsRuntimeObjectRef>("babylonInterop.createVector3", x, y, z));
+
+        public async ValueTask DisposeAsync() => throw new NotImplementedException();
     }
 }
