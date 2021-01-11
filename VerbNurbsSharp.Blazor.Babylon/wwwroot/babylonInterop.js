@@ -39,11 +39,30 @@ DotNet.attachReviver(function (key, value) {
     }
 });
 
+babylonInterop.attachGrid = function (scene) {
+
+    var groundMaterial = new BABYLON.GridMaterial("groundMaterial", scene);
+    groundMaterial.majorUnitFrequency = 5;
+    groundMaterial.minorUnitVisibility = 0.45;
+    groundMaterial.gridRatio = 2;
+    groundMaterial.backFaceCulling = false;
+    groundMaterial.mainColor = new BABYLON.Color3(1, 1, 1);
+    groundMaterial.lineColor = new BABYLON.Color3(0, 0, 0);
+    groundMaterial.opacity = 0.98;
+
+    //abstract plane from its position and normal
+    const abstractPlane = BABYLON.Plane.FromPositionAndNormal(new BABYLON.Vector3(0, 0, 0), new BABYLON.Vector3(0, 1, 0));
+    const ground = BABYLON.MeshBuilder.CreatePlane("plane", { sourcePlane: abstractPlane, sideOrientation: BABYLON.Mesh.DOUBLESIDE, size: 20 });
+
+    ground.material = groundMaterial;
+}
+
 babylonInterop.initCanvas = function (canvasId) {
     var babylonCanvas = document.getElementById(canvasId);
     var babylonEngine = new BABYLON.Engine(babylonCanvas, true);
 
     var scene = babylonInterop.createSceneWithSphere(babylonEngine, babylonCanvas);
+
 
     babylonEngine.runRenderLoop(function () {
         scene.render();
@@ -54,18 +73,6 @@ babylonInterop.initCanvas = function (canvasId) {
     });
 };
 
-babylonInterop.createSceneWithSphere = function (engine, canvas) {
-    scene = new BABYLON.Scene(engine);
-
-    var camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 2, new BABYLON.Vector3(0, 0, 5), scene);
-    camera.attachControl(canvas, true);
-
-    var light1 = new BABYLON.HemisphericLight("light1", new BABYLON.Vector3(1, 1, 0), scene);
-    var light2 = new BABYLON.PointLight("light2", new BABYLON.Vector3(0, 1, -1), scene);
-
-    var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 2 }, scene);
-    return scene;
-};
 
 babylonInterop.createArcRotateCamera = function (name, alpha, beta, radius, target, scene, canvasId) {
     var camera = new BABYLON.ArcRotateCamera(name, alpha, beta, radius, target, scene);
@@ -96,6 +103,7 @@ babylonInterop.createScene = function (engine) {
 }
 
 babylonInterop.createSphere = function (name, options, scene) {
+    babylonInterop.attachGrid(scene);
     return babylonInterop.storeObjRef(BABYLON.MeshBuilder.CreateSphere(name, options, scene));
 }
 
