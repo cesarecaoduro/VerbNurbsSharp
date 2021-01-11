@@ -1,7 +1,9 @@
 ﻿@page "/testscene"
 @inject IBabylonFactory babylonFactory
+
 @using System.Dynamic
 @using VerbNurbsSharp.Blazor.Babylon.Core
+@using VerbNurbsSharp.Blazor.Babylon.Meshes
 
 <h3>Test Scene</h3>
 
@@ -11,7 +13,8 @@
         <canvas id="babylonRender" touch-action="none" style="width:100%; height:100%"></canvas>
     </Column>
     <Column ColumnSize="ColumnSize.IsHalf">
-        <Slider TValue="double" @bind-Value="sliderValue" Min="0.1" Max="5.0" @onchange="ValueChanged">Diameter</Slider>
+        <Blazorise.Button Clicked="@AddMesh" Color="Color.Primary">Add</Blazorise.Button>
+        <Blazorise.Button Clicked="@DeleteMesh" Color="Color.Primary">Delete</Blazorise.Button>
     </Column>
 </Row>
 
@@ -19,6 +22,8 @@
 
     public double sliderValue { get; set; } = 2.0;
     public Scene scene { get; set; }
+    public Engine engine { get; set; }
+    Mesh sphere { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -36,18 +41,20 @@
             var light2 = await babylonFactory.CreatePointLight("light2", pointLightDirection, scene);
             var sphereOptions = new ExpandoObject();
             sphereOptions.TryAdd("diameter", sliderValue);
-            var sphere = await babylonFactory.CreateSphere("sphere", sphereOptions, scene);
+            sphere = await babylonFactory.CreateSphere("sphere", sphereOptions, scene);
             await engine.RunRenderLoop(scene);
-
         }
-
     }
 
-    async Task ValueChanged()
+    async Task DeleteMesh()
     {
-        Console.WriteLine(sliderValue);
+        await babylonFactory.DisposeMesh(sphere);
+    }
+
+    async Task AddMesh()
+    {
         var sphereOptions = new ExpandoObject();
-        sphereOptions.TryAdd("diameter", sliderValue);
-        var sphere = await babylonFactory.CreateSphere("sphere", sphereOptions, scene);
+        sphereOptions.TryAdd("diameter", 1);
+        sphere = await babylonFactory.CreateSphere("sphere", sphereOptions, scene);
     }
 }

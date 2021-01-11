@@ -10,8 +10,17 @@ babylonInterop.storeObjRef = function (obj) {
     objRef[babylonInterop.objRefKey] = id;
     return objRef;
 }
+
+
 babylonInterop.removeObjectRef = function (id) {
-    delete babylonInterop.objRefs[id];
+    if (babylonInterop.objRefs[id] != null) {
+        babylonInterop.objRefs[id].dispose();
+        delete babylonInterop.objRefs[id];
+    }
+}
+
+babylonInterop.AddSphere = function (scene) {
+    var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 2 }, scene); 
 }
 
 DotNet.attachReviver(function (key, value) {
@@ -34,7 +43,6 @@ babylonInterop.initCanvas = function (canvasId) {
     var babylonCanvas = document.getElementById(canvasId);
     var babylonEngine = new BABYLON.Engine(babylonCanvas, true);
 
-
     var scene = babylonInterop.createSceneWithSphere(babylonEngine, babylonCanvas);
 
     babylonEngine.runRenderLoop(function () {
@@ -47,7 +55,7 @@ babylonInterop.initCanvas = function (canvasId) {
 };
 
 babylonInterop.createSceneWithSphere = function (engine, canvas) {
-    var scene = new BABYLON.Scene(engine);
+    scene = new BABYLON.Scene(engine);
 
     var camera = new BABYLON.ArcRotateCamera("Camera", Math.PI / 2, Math.PI / 2, 2, new BABYLON.Vector3(0, 0, 5), scene);
     camera.attachControl(canvas, true);
@@ -56,7 +64,6 @@ babylonInterop.createSceneWithSphere = function (engine, canvas) {
     var light2 = new BABYLON.PointLight("light2", new BABYLON.Vector3(0, 1, -1), scene);
 
     var sphere = BABYLON.MeshBuilder.CreateSphere("sphere", { diameter: 2 }, scene);
-
     return scene;
 };
 

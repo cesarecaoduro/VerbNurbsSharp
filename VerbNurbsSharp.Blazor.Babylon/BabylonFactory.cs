@@ -9,7 +9,7 @@ using VerbNurbsSharp.Blazor.Babylon.Meshes;
 
 namespace VerbNurbsSharp.Blazor.Babylon
 {
-    public class BabylonFactory : IBabylonFactory, IAsyncDisposable
+    public class BabylonFactory : IBabylonFactory
     {
         private readonly IJSRuntime _jsRuntime;
         private readonly Lazy<Task<IJSObjectReference>> moduleTask;
@@ -52,7 +52,10 @@ namespace VerbNurbsSharp.Blazor.Babylon
         public async Task<Vector3> CreateVector3(double x, double y, double z) => new Vector3(
             _jsRuntime, 
             await _jsRuntime.InvokeAsync<JsRuntimeObjectRef>("babylonInterop.createVector3", x, y, z));
+        public async Task AddSphere(Scene scene) => await _jsRuntime.InvokeAsync<JsRuntimeObjectRef>("babylonInterop.createVector3", scene);
 
-        public async ValueTask DisposeAsync() => throw new NotImplementedException();
+
+        public async Task DisposeMesh(Mesh mesh) => await _jsRuntime.InvokeVoidAsync("babylonInterop.removeObjectRef", mesh.JsObjectRefId);
+
     }
 }
