@@ -126,5 +126,22 @@ namespace VerbNurbsSharp.Evaluation
         /// <param name="homogeneousPts">Points represented by an array (wi*pi, wi) with length (dim+1).</param>
         /// <returns>Set of points, each of length dim.</returns>
         public static List<Vector> Dehomogenize1d(List<Vector> homogeneousPts) => homogeneousPts.Select(Dehomogenize).ToList();
+        /// <summary>
+        /// Compute a point on a non-uniform, non-rational b-spline curve.
+        /// Corresponds to algorithm 3.1 from The NURBS book, Piegl & Tiller 2nd edition.
+        /// </summary>
+        /// <param name="n">Integer number of basis functions - 1 = knots.length - degree - 2</param>
+        /// <param name="nurbsCurve">NurbsCurve object.</param>
+        /// <param name="parameter">Parameter on the curve at which the point is to be evaluated</param>
+        /// <returns>A point represented by an array of length (dim).</returns>
+        public static Vector CurvePointGiveN(int n, NurbsCurve nurbsCurve, double parameter)
+        {
+            throw new NotImplementedException();
+            //Needs
+            // eval.KnotSpanGiveN
+            // eval.BasicFunctionsGivenKnotSpanIndex
+            // Vec.Zero1d
+            // Vec.AddMulMutate
+        }
     }
 }

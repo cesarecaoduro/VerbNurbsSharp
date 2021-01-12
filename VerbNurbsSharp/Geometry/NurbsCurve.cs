@@ -60,19 +60,45 @@ namespace VerbNurbsSharp.Geometry
         /// <returns>Get the result.</returns>
         public bool AreControlPointsHomogenized() => this.ControlPoints.All(pt => pt.Count == 4);
         /// <summary>
+        /// Determine the valid domain of the curve.
+        /// </summary>
+        /// <returns>representing the high and end point of the domain of the curve.</returns>
+        public Interval Domain() => new Interval(this.Knots.First(), this.Knots.Last());
+        /// <summary>
         /// Transform a curve with the given matrix.
         /// </summary>
         /// <param name="mat">4d set representing the transform.</param>
         /// <returns>A new NurbsCurve transformed.</returns>
+        /// ToDo Implement the async method.
         public NurbsCurve Transform(Matrix mat) => new NurbsCurve(Modify.RationalCurveTransform(this, mat));
-        // ToDo Implement the async method.
         /// <summary>
         /// Split the curve at the give parameter.
         /// </summary>
         /// <param name="t">The parameter at which to split the curve</param>
         /// <returns>Two curves - one at the lower end of the parameter range and one at the higher end.</returns>
+        /// ToDo Implement the async method.
         public List<NurbsCurve> Split(double t) => Divide.CurveSplit(this, t);
-        // ToDo Implement the async method.
+        /// <summary>
+        /// Sample a point at the given parameter.
+        /// </summary>
+        /// <param name="t">The parameter to sample the curve.</param>
+        /// <returns>The point at the parameter provided.</returns>
+        /// ToDo Implement the async method.
+        public Vector PointAt(double t)
+        {
+            var n = this.Knots.Count - this.Degree - 2;
+            var pts = Eval.CurvePointGiveN(n, this, t);
+        }
+
+
+
+
+
+
+
+
+
+
 
         public void GetObjectData(SerializationInfo info, StreamingContext context)
         {
@@ -80,16 +106,6 @@ namespace VerbNurbsSharp.Geometry
         }
 
         public NurbsCurve AsNurbs()
-        {
-            throw new System.NotImplementedException();
-        }
-        /// <summary>
-        /// Determine the valid domain of the curve.
-        /// </summary>
-        /// <returns>representing the high and end point of the domain of the curve.</returns>
-        public Interval Domain() => new Interval(this.Knots.First(), this.Knots.Last());
-
-        public Vector PointAt(double t)
         {
             throw new System.NotImplementedException();
         }

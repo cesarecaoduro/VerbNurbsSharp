@@ -188,7 +188,7 @@ namespace VerbNurbsSharp.Core
         public static double AddAllMutate(List<Vector> a) => throw new NotImplementedException();
         // This multiple all the vectors for a value and add them to the first one
         public static double AddMulMutate(Vector a, Vector b, double s) => throw new NotImplementedException();
-        // This subtract all the vectors for a value and add them to the first one
+        // This multiple the vector b for the scalar s and subtrac the new vector to the vector a.
         public static double SubMulMutate(Vector a, Vector b, double s) => throw new NotImplementedException();
         // Like addition but modifying the first vector.
         public static double AddMutate(Vector a, Vector b) => throw new NotImplementedException();
