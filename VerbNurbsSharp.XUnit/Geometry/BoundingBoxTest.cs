@@ -9,7 +9,6 @@ namespace VerbNurbsSharp.XUnit.Geometry
     public class BoundingBoxTest
     {
         private readonly ITestOutputHelper _testOutput;
-
         public BoundingBoxTest(ITestOutputHelper testOutput)
         {
             _testOutput = testOutput;
@@ -115,9 +114,7 @@ namespace VerbNurbsSharp.XUnit.Geometry
         public void Return_A_BBox_NotInitialized()
         {
             BoundingBox bBox = new BoundingBox(BoundingBoxCollection.BoundingBoxFrom5Points());
-
             bBox.Clear();
-
             bBox.IsValid.Should().BeFalse();
         }
 
@@ -127,9 +124,7 @@ namespace VerbNurbsSharp.XUnit.Geometry
         public void Return_ACollection_Of_GetAxisLength(List<Vector3> pts, int index, double length)
         {
             BoundingBox bBox = new BoundingBox(pts);
-
             double lengthResult = bBox.GetAxisLength(index);
-
             lengthResult.Should().Be(length);
         }
 
@@ -138,9 +133,7 @@ namespace VerbNurbsSharp.XUnit.Geometry
         public void Return_TheLongestAxis()
         {
             BoundingBox bBox = new BoundingBox(BoundingBoxCollection.BoundingBoxWithZValue());
-
             int longestAxis = bBox.GetLongestAxis();
-
             longestAxis.Should().Be(1);
         }
 

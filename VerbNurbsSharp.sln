@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VerbNurbsSharp.BlazorWASM",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VerbNurbsSharp.XUnit", "VerbNurbsSharp.XUnit\VerbNurbsSharp.XUnit.csproj", "{36A8B30B-0F3A-4712-A61D-EAB91E6360A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeometrySharp.Clipper", "GeometrySharp.Clipper\GeometrySharp.Clipper.csproj", "{B3B4AC95-4BD5-40D8-8886-5E567F9EB2B0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,18 @@ Global
 		{36A8B30B-0F3A-4712-A61D-EAB91E6360A9}.Release|x64.Build.0 = Release|x64
 		{36A8B30B-0F3A-4712-A61D-EAB91E6360A9}.Release|x86.ActiveCfg = Release|x86
 		{36A8B30B-0F3A-4712-A61D-EAB91E6360A9}.Release|x86.Build.0 = Release|x86
+		{B3B4AC95-4BD5-40D8-8886-5E567F9EB2B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3B4AC95-4BD5-40D8-8886-5E567F9EB2B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3B4AC95-4BD5-40D8-8886-5E567F9EB2B0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{B3B4AC95-4BD5-40D8-8886-5E567F9EB2B0}.Debug|x64.Build.0 = Debug|Any CPU
+		{B3B4AC95-4BD5-40D8-8886-5E567F9EB2B0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{B3B4AC95-4BD5-40D8-8886-5E567F9EB2B0}.Debug|x86.Build.0 = Debug|Any CPU
+		{B3B4AC95-4BD5-40D8-8886-5E567F9EB2B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3B4AC95-4BD5-40D8-8886-5E567F9EB2B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3B4AC95-4BD5-40D8-8886-5E567F9EB2B0}.Release|x64.ActiveCfg = Release|Any CPU
+		{B3B4AC95-4BD5-40D8-8886-5E567F9EB2B0}.Release|x64.Build.0 = Release|Any CPU
+		{B3B4AC95-4BD5-40D8-8886-5E567F9EB2B0}.Release|x86.ActiveCfg = Release|Any CPU
+		{B3B4AC95-4BD5-40D8-8886-5E567F9EB2B0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
