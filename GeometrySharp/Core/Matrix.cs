@@ -202,7 +202,34 @@ namespace GeometrySharp.Core
         }
 
         /// <summary>
-        /// The translation component of the Matrix.
+        /// The X axis of the Matrix with weight.
+        /// </summary>
+        [JsonIgnore]
+        public Vector3 XAxisW
+        {
+            get { return new Vector3(m11, m12, m13, wx); }
+        }
+
+        /// <summary>
+        /// The Y axis of the Matrix with weight.
+        /// </summary>
+        [JsonIgnore]
+        public Vector3 YAxisW
+        {
+            get { return new Vector3(m21, m22, m23, wy); }
+        }
+
+        /// <summary>
+        /// The Z axis of the Matrix with weight.
+        /// </summary>
+        [JsonIgnore]
+        public Vector3 ZAxisW
+        {
+            get { return new Vector3(m31, m32, m33, wz); }
+        }
+
+        /// <summary>
+        /// The translation component of the Matrix .
         /// </summary>
         [JsonIgnore]
         public Vector3 Translation
@@ -210,6 +237,14 @@ namespace GeometrySharp.Core
             get { return new Vector3(tx, ty, tz); }
         }
 
+        /// <summary>
+        /// The translation component of the Matrix with weight.
+        /// </summary>
+        [JsonIgnore]
+        public Vector3 TranslationW
+        {
+            get { return new Vector3(tx, ty, tz, wt); }
+        }
         /// <summary>
         /// The translation component of the Matrix.
         /// </summary>
@@ -244,7 +279,7 @@ namespace GeometrySharp.Core
             tx = translation.X; ty = translation.Y; tz = translation.Z;
             wx = wy = wz = wt = 1;
         }
-            
+
 
         /// <summary>
         /// Set the matrix to identity.
@@ -422,67 +457,6 @@ namespace GeometrySharp.Core
             tz = v.Z;
         }
 
-
-        /// <summary>
-        /// Multiply two matrices.
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="b"></param>
-        /// <returns></returns>
-        public static Matrix operator *(Matrix a, Matrix b)
-        {
-            var r = new Matrix();
-
-            r.m11 = a.m11 * b.m11 + a.m12 * b.m21 + a.m13 * b.m31;
-            r.m12 = a.m11 * b.m12 + a.m12 * b.m22 + a.m13 * b.m32;
-            r.m13 = a.m11 * b.m13 + a.m12 * b.m23 + a.m13 * b.m33;
-
-            r.m21 = a.m21 * b.m11 + a.m22 * b.m21 + a.m23 * b.m31;
-            r.m22 = a.m21 * b.m12 + a.m22 * b.m22 + a.m23 * b.m32;
-            r.m23 = a.m21 * b.m13 + a.m22 * b.m23 + a.m23 * b.m33;
-
-            r.m31 = a.m31 * b.m11 + a.m32 * b.m21 + a.m33 * b.m31;
-            r.m32 = a.m31 * b.m12 + a.m32 * b.m22 + a.m33 * b.m32;
-            r.m33 = a.m31 * b.m13 + a.m32 * b.m23 + a.m33 * b.m33;
-
-            r.tx = a.tx * b.m11 + a.ty * b.m21 + a.tz * b.m31 + b.tx;
-            r.ty = a.tx * b.m12 + a.ty * b.m22 + a.tz * b.m32 + b.ty;
-            r.tz = a.tx * b.m13 + a.ty * b.m23 + a.tz * b.m33 + b.tz;
-
-            return r;
-        }
-
-        /// <summary>
-        /// Transform the specified vector.
-        /// </summary>
-        /// <param name="p">The vector to transform.</param>
-        /// <param name="m">The transformation matrix.</param>
-        /// <returns></returns>
-        public static Vector3 operator *(Vector3 p, Matrix m)
-        {
-            return new Vector3(
-                p.X * m.m11 + p.Y * m.m21 + p.Z * m.m31 + m.tx,
-                p.X * m.m12 + p.Y * m.m22 + p.Z * m.m32 + m.ty,
-                p.X * m.m13 + p.Y * m.m23 + p.Z * m.m33 + m.tz
-            );
-        }
-
-        /// <summary>
-        /// Multiply a matrix for a double. Equals to scale a matrix by the same value along the 3 axis
-        /// </summary>
-        /// <param name="a"></param>
-        /// <param name="m"></param>
-        /// <returns></returns>
-        public static Matrix operator *(double a, Matrix m)
-        {
-            Matrix r = new Matrix();
-            r.m11 = m.m11 * a; r.m12 = m.m12 * a; r.m13 = m.m13 * a;
-            r.m21 = m.m21 * a; r.m22 = m.m22 * a; r.m23 = m.m23 * a;
-            r.m31 = m.m31 * a; r.m32 = m.m32 * a; r.m33 = m.m33 * a;
-            return r;
-        }
-
-
         /// <summary>
         /// Transpose the matrix.
         /// </summary>
@@ -569,6 +543,64 @@ namespace GeometrySharp.Core
 
         public override string ToJson() => JsonConvert.SerializeObject(this);
 
+        /// <summary>
+        /// Multiply two matrices.
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static Matrix operator *(Matrix a, Matrix b)
+        {
+            var r = new Matrix();
+
+            r.m11 = a.m11 * b.m11 + a.m12 * b.m21 + a.m13 * b.m31;
+            r.m12 = a.m11 * b.m12 + a.m12 * b.m22 + a.m13 * b.m32;
+            r.m13 = a.m11 * b.m13 + a.m12 * b.m23 + a.m13 * b.m33;
+
+            r.m21 = a.m21 * b.m11 + a.m22 * b.m21 + a.m23 * b.m31;
+            r.m22 = a.m21 * b.m12 + a.m22 * b.m22 + a.m23 * b.m32;
+            r.m23 = a.m21 * b.m13 + a.m22 * b.m23 + a.m23 * b.m33;
+
+            r.m31 = a.m31 * b.m11 + a.m32 * b.m21 + a.m33 * b.m31;
+            r.m32 = a.m31 * b.m12 + a.m32 * b.m22 + a.m33 * b.m32;
+            r.m33 = a.m31 * b.m13 + a.m32 * b.m23 + a.m33 * b.m33;
+
+            r.tx = a.tx * b.m11 + a.ty * b.m21 + a.tz * b.m31 + b.tx;
+            r.ty = a.tx * b.m12 + a.ty * b.m22 + a.tz * b.m32 + b.ty;
+            r.tz = a.tx * b.m13 + a.ty * b.m23 + a.tz * b.m33 + b.tz;
+
+            return r;
+        }
+
+        /// <summary>
+        /// Transform the specified vector.
+        /// </summary>
+        /// <param name="p">The vector to transform.</param>
+        /// <param name="m">The transformation matrix.</param>
+        /// <returns></returns>
+        public static Vector3 operator *(Vector3 p, Matrix m)
+        {
+            return new Vector3(
+                p.X * m.m11 + p.Y * m.m21 + p.Z * m.m31 + m.tx,
+                p.X * m.m12 + p.Y * m.m22 + p.Z * m.m32 + m.ty,
+                p.X * m.m13 + p.Y * m.m23 + p.Z * m.m33 + m.tz
+            );
+        }
+
+        /// <summary>
+        /// Multiply a matrix for a double. Equals to scale a matrix by the same value along the 3 axis
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="m"></param>
+        /// <returns></returns>
+        public static Matrix operator *(double a, Matrix m)
+        {
+            Matrix r = new Matrix();
+            r.m11 = m.m11 * a; r.m12 = m.m12 * a; r.m13 = m.m13 * a;
+            r.m21 = m.m21 * a; r.m22 = m.m22 * a; r.m23 = m.m23 * a;
+            r.m31 = m.m31 * a; r.m32 = m.m32 * a; r.m33 = m.m33 * a;
+            return r;
+        }
 
         /// <summary>
         /// Add two matrices
@@ -614,7 +646,7 @@ namespace GeometrySharp.Core
             r.m31 = a.m31 - b.m31; r.m32 = a.m32 - b.m32; r.m33 = a.m33 - b.m33;
             return r;
         }
-        
+
     }
 
 }

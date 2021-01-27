@@ -32,6 +32,8 @@ namespace GeometrySharp.Geometry
         /// </summary>
         public static Vector3 ZAxis =>_zAxis;
 
+
+
         public Vector3()
         {
         }
@@ -42,6 +44,7 @@ namespace GeometrySharp.Geometry
         }
 
         public Vector3(double x, double y, double z) => this.AddRange(new List<double> { x, y, z});
+        public Vector3(double x, double y, double z, double w) => this.AddRange(new List<double> { x, y, z, w });
 
         /// <summary>
         /// Gets the value of a point at location GeoSharpMath.UNSETVALUE,GeoSharpMath.UNSETVALUE,GeoSharpMath.UNSETVALUE.
