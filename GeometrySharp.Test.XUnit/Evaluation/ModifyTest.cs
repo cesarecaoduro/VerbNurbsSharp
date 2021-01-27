@@ -19,28 +19,28 @@ namespace GeometrySharp.Test.XUnit.Evaluation
 			_testOutput = testOutput;
 		}
 
-        [Fact]
-        public void It_Returns_A_Transformed_NurbsCurve_Using_A_Matrix()
-        {
-            var curve = NurbsCurveTests.NurbsCurveExample();
-            var mat = new Matrix() {
-                new List<double>{1.0, 0.0, 0.0, -10.0 },
-                new List<double>{0.0, 1.0, 0.0, 20.0 },
-                new List<double>{0.0, 0.0, 1.0, 1.0 },
-                new List<double>{0.0, 0.0, 0.0, 1.0 }
-            };
+   //     [Fact]
+   //     public void It_Returns_A_Transformed_NurbsCurve_Using_A_Matrix()
+   //     {
+   //         var curve = NurbsCurveTests.NurbsCurveExample();
+   //         var mat = new Matrix() {
+   //             new List<double>{1.0, 0.0, 0.0, -10.0 },
+   //             new List<double>{0.0, 1.0, 0.0, 20.0 },
+   //             new List<double>{0.0, 0.0, 1.0, 1.0 },
+   //             new List<double>{0.0, 0.0, 0.0, 1.0 }
+   //         };
 
-			var expectedControlPts = new List<Vector3>()
-            {
-                new Vector3(){-20.0, 35.0, 6.0, 1.0 },
-                new Vector3(){0.0, 25.0, 6.0, 1.0 },
-                new Vector3(){10.0, 20.0, 1.0, 1.0 },
-			};
+			//var expectedControlPts = new List<Vector3>()
+   //         {
+   //             new Vector3(){-20.0, 35.0, 6.0, 1.0 },
+   //             new Vector3(){0.0, 25.0, 6.0, 1.0 },
+   //             new Vector3(){10.0, 20.0, 1.0, 1.0 },
+			//};
 
-            var resultedCurve = Modify.RationalCurveTransform(curve, mat);
+   //         var resultedCurve = Modify.RationalCurveTransform(curve, mat);
 
-            resultedCurve.ControlPoints.Should().BeEquivalentTo(expectedControlPts);
-        }
+   //         resultedCurve.ControlPoints.Should().BeEquivalentTo(expectedControlPts);
+   //     }
 
         [Theory]
         [InlineData(2.5 ,1)]

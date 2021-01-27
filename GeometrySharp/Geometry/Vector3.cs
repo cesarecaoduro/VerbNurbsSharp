@@ -11,8 +11,27 @@ namespace GeometrySharp.Geometry
     /// Like a Vector3, a Vector3 in verb is represented simply by an list of double point numbers.
     /// So, you would write simply [1,0,0] to create a Vector3 in the X direction.
     /// </summary>
-    public class Vector3 : List<double>
+    public partial class Vector3 : List<double>
     {
+        private static Vector3 _xAxis = new Vector3(1, 0, 0);
+        private static Vector3 _yAxis = new Vector3(0, 1, 0);
+        private static Vector3 _zAxis = new Vector3(0, 0, 1);
+
+        /// <summary>
+        /// Create a vector along the X axis.
+        /// </summary>
+        public static Vector3 XAxis => _xAxis;
+
+        /// <summary>
+        /// Create a vector along the Y axis.
+        /// </summary>
+        public static Vector3 YAxis => _yAxis;
+
+        /// <summary>
+        /// Create a vector along the Z axis.
+        /// </summary>
+        public static Vector3 ZAxis =>_zAxis;
+
         public Vector3()
         {
         }
@@ -22,10 +41,27 @@ namespace GeometrySharp.Geometry
             this.AddRange(values);
         }
 
+        public Vector3(double x, double y, double z) => this.AddRange(new List<double> { x, y, z});
+
         /// <summary>
         /// Gets the value of a point at location GeoSharpMath.UNSETVALUE,GeoSharpMath.UNSETVALUE,GeoSharpMath.UNSETVALUE.
         /// </summary>
         public static Vector3 Unset => new Vector3(){ GeoSharpMath.UNSETVALUE, GeoSharpMath.UNSETVALUE, GeoSharpMath.UNSETVALUE };
+
+        /// <summary>
+        /// X component of the Vector
+        /// </summary>
+        public double X => this[0];
+
+        /// <summary>
+        /// Y component of the Vector
+        /// </summary>
+        public double Y => this[1];
+
+        /// <summary>
+        /// Z component of the Vector
+        /// </summary>
+        public double Z => this[2];
 
         /// <summary>
         /// The angle in radians between two vectors.
@@ -172,6 +208,13 @@ namespace GeometrySharp.Geometry
                 llv.Add(Zero2d(cols, depth));
             return llv;
         }
+
+        /// <summary>
+        /// Compute the dot product of this vector and v.
+        /// </summary>
+        /// <param name="v">The vector with which to compute the dot product.</param>
+        /// <returns>The dot product.</returns>
+        public double Dot(Vector3 v) => v.X * this.X + v.Y * this.Y + v.Z * this.Z;
 
         /// <summary>
         /// The distance from this point to b.

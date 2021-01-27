@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
 using GeometrySharp.Core;
-using GeometrySharp.Evaluation;
 using GeometrySharp.Geometry;
-using GeometrySharp.XUnit.Core;
+using GeometrySharp.Test.XUnit.Core;
 using Xunit;
 using Xunit.Abstractions;
-using verb;
-using verb.core;
 
 namespace GeometrySharp.Test.XUnit.Geometry
 {

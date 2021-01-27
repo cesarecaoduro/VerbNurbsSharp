@@ -165,8 +165,8 @@ namespace GeometrySharp.Evaluation
             {
                 var pt = pts[i];
 				pt.Add(1.0);
-                pts[i] = Matrix.Dot(mat, pt).Take(pt.Count - 1).ToVector();
-            }
+				pts[i] = (pt * mat).Take(pt.Count - 1).ToVector();
+			}
 
             return new NurbsCurve(curve.Degree, curve.Knots, pts, curve.Weights!);
         }

@@ -13,17 +13,42 @@ namespace GeometrySharp.Test.XUnit.Core
     {
         public static readonly Matrix IdentityMatrix = new Matrix()
         {
-            new List<double> { 1, 0, 0 },
-            new List<double> { 0, 1, 0 },
-            new List<double> { 0, 0, 1 }
+            m11 = 1,
+            m12 = 0,
+            m13 = 0,
+            m21 = 0,
+            m22 = 1,
+            m23 = 0,
+            m31 = 0,
+            m32 = 0,
+            m33 = 1,
+            tx = 0,
+            ty = 0,
+            tz = 0,
+            wx = 1,
+            wy = 1, 
+            wz = 1,
+            wt = 1
         };
 
         public static readonly Matrix TransformationMatrixExample = new Matrix()
         {
-            new List<double>{1.0, 0.0, 0.0, -10.0 },
-            new List<double>{0.0, 1.0, 0.0, 20.0 },
-            new List<double>{0.0, 0.0, 1.0, 1.0 },
-            new List<double>{0.0, 0.0, 0.0, 1.0 }
+            m11 = 1,
+            m12 = 0,
+            m13 = 0,
+            m21 = 0,
+            m22 = 1,
+            m23 = 0,
+            m31 = 0,
+            m32 = 0,
+            m33 = 1,
+            tx = -10,
+            ty = 20,
+            tz = 1
+            //new List<double>{1.0, 0.0, 0.0, -10.0 },
+            //new List<double>{0.0, 1.0, 0.0, 20.0 },
+            //new List<double>{0.0, 0.0, 1.0, 1.0 },
+            //new List<double>{0.0, 0.0, 0.0, 1.0 }
         };
 
         private readonly ITestOutputHelper _testOutput;
@@ -31,23 +56,24 @@ namespace GeometrySharp.Test.XUnit.Core
         {
             _testOutput = testOutput;
         }
-        
+
         [Fact]
         public void It_Creates_An_Identity_Matrix()
         {
-           int i = 3;
-           Matrix.Identity(i).Should().BeEquivalentTo(IdentityMatrix);
+            var m = new Matrix();
+            m.SetIdentity();
+            m.Should().BeEquivalentTo(IdentityMatrix);
         }
 
         [Fact]
         public void It_Returns_A_Transformed_Vector()
         {
-            var homogenizedVec = new Vector3(){-10.0, 20.0, 5.0, 1.0};
+            var homogenizedVec = new Vector3() { -10.0, 20.0, 5.0, 1.0 };
 
             var vecExpected = new Vector3() { -20.0, 40.0, 6.0, 1.0 };
 
-            var transformedVec = Matrix.Dot(TransformationMatrixExample, homogenizedVec);
-
+            var transformedVec = homogenizedVec * TransformationMatrixExample;
+  
             transformedVec.Should().BeEquivalentTo(vecExpected);
         }
 
@@ -56,7 +82,7 @@ namespace GeometrySharp.Test.XUnit.Core
         {
             var vec = new Vector3() { -10.0, 20.0, 5.0 };
 
-            Func<object> funcResult = () => Matrix.Dot(TransformationMatrixExample, vec);
+            Func<object> funcResult = () => vec * TransformationMatrixExample;
 
             funcResult.Should().Throw<ArgumentOutOfRangeException>();
         }

@@ -33,7 +33,7 @@
 
   <ItemGroup>
     <Reference Include="Verb">
-      <HintPath>..\..\verb\build\cs\bin\Verb.dll</HintPath>
+      <HintPath>..\..\..\verb\build\cs\bin\Verb.dll</HintPath>
     </Reference>
   </ItemGroup>
 
