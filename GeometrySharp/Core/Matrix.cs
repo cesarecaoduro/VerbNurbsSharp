@@ -11,7 +11,7 @@ namespace GeometrySharp.Core
     /// The first 3 columns represent the X, Y, and Z axes of the coordinate system.
     /// The fourth column represents the translation of the coordinate system.
     /// </summary>
-    public partial class Matrix : IEquatable<Matrix>
+    public partial class Matrix : Serializable<Matrix>, IEquatable<Matrix>
     {
         public List<double> Components { get; set; }
 
@@ -564,7 +564,11 @@ namespace GeometrySharp.Core
             }
             return true;
         }
-      
+
+        public override Matrix FromJson(string s) => throw new NotImplementedException();
+
+        public override string ToJson() => JsonConvert.SerializeObject(this);
+
 
         /// <summary>
         /// Add two matrices
