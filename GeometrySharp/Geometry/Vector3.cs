@@ -16,6 +16,7 @@ namespace GeometrySharp.Geometry
         private static Vector3 _xAxis = new Vector3(1, 0, 0);
         private static Vector3 _yAxis = new Vector3(0, 1, 0);
         private static Vector3 _zAxis = new Vector3(0, 0, 1);
+        private static Vector3 _origin = new Vector3(0, 0, 0);
 
         /// <summary>
         /// Create a vector along the X axis.
@@ -32,7 +33,11 @@ namespace GeometrySharp.Geometry
         /// </summary>
         public static Vector3 ZAxis =>_zAxis;
 
-
+        /// <summary>
+        /// Create a vector at the origin.
+        /// </summary>
+        /// <returns></returns>
+        public static Vector3 Origin => _origin;
 
         public Vector3()
         {
