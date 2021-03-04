@@ -3,6 +3,7 @@
 /// Surface area
 /// Split
 /// Tessellate
+/// Boundaries
 
 
 using GeometrySharp.Core;
