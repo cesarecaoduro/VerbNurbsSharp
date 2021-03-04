@@ -1,4 +1,11 @@
-﻿using GeometrySharp.Core;
+﻿///TODO
+/// ClosePointAt
+/// Surface area
+/// Split
+/// Tessellate
+
+
+using GeometrySharp.Core;
 using GeometrySharp.ExtendedMethods;
 using GeometrySharp.Operation;
 using Newtonsoft.Json;
